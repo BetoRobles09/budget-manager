@@ -1,5 +1,8 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## Project 2: Budget Manager
+This is a project that help you to keep a track of your weekly expenses. It uses react hooks, and a helper to change some css class of a component depending on what's left in the weekly budget 
+
 ## Available Scripts
 
 In the project directory, you can run:
