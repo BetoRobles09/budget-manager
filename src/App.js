@@ -1,26 +1,51 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, useEffect } from 'react'
+import Question from './components/Question'
+import Form from './components/Form'
+import List from './components/List'
+import Budget from './components/Budget'
 
-function App() {
+function App () {
+  const [budget, setBudget] = useState(0)
+  const [remaining, setRemaining] = useState(0)
+  const [showquestion, updateQuestion] = useState(true)
+  const [expenseslist, setExpensesList] = useState([])
+  const [expense, setExpense] = useState({})
+  const [createexpense, setCreateExpense] = useState(false)
+
+  useEffect(() => {
+    if (createexpense) {
+      setExpensesList([
+        ...expenseslist,
+        expense
+      ])
+      const remainingBudget = remaining - expense.amount
+      setRemaining(remainingBudget)
+      setCreateExpense(false)
+    }
+  }, [expense, createexpense, expenseslist, remaining])
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+    <div className='container'>
+      <header>
+        <h1>Weekly Expenses</h1>
+        <div className='contenido-principal contenido'>
+          {showquestion ? (
+            <Question setBudget={setBudget} setRemaining={setRemaining} updateQuestion={updateQuestion} />
+          ) : (
+            <div className='row'>
+              <div className='one-half column'>
+                <Form setExpense={setExpense} setCreateExpense={setCreateExpense} />
+              </div>
+              <div className='one-half column'>
+                <List expenseslist={expenseslist} />
+                <Budget budget={budget} remaining={remaining} />
+              </div>
+            </div>
+          )}
+        </div>
       </header>
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
